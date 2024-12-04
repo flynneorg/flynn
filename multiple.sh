@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "脚本由大赌社区flynn编写，免费开源，请勿相信收费"
+
 # 定义安装目录和文件名
 INSTALL_DIR="/root/multipleforlinux"
 TAR_FILE="multipleforlinux.tar"
@@ -47,9 +49,22 @@ cd $INSTALL_DIR
 echo "启动节点程序..."
 nohup ./multiple-node > output.log 2>&1 &
 
+# 用户自定义参数
+read -p "请输入下载带宽（单位：Mbps，例如100）： " BANDWIDTH_DOWNLOAD
+read -p "请输入唯一标识符（例如399MGL34）： " IDENTIFIER
+read -p "请输入PIN码（例如：1234）： " PIN
+read -p "请输入上传带宽（单位：Mbps，例如100）： " BANDWIDTH_UPLOAD
+read -p "请输入存储空间（单位：GB，例如100）： " STORAGE
+
 # 执行绑定操作
 echo "绑定配置中..."
-./multiple-cli bind --bandwidth-download 100 --identifier 399MGL34 --pin --storage 10 --bandwidth-upload 10
+./multiple-cli bind \
+    --bandwidth-download "$BANDWIDTH_DOWNLOAD" \
+    --identifier "$IDENTIFIER" \
+    --pin "$PIN" \
+    --storage "$STORAGE" \
+    --bandwidth-upload "$BANDWIDTH_UPLOAD"
 
 # 提示完成
 echo "安装和配置完成。"
+
